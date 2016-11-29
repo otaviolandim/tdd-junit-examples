@@ -39,17 +39,29 @@ public class LeilaoTest {
 	}
 	
 	@Test
-	public void naoDeveDarLanceQuandoValorForZero_tryCatch() {
+	public void naoDeveDarLanceQuandoValorForNegativo_tryCatch() {
 		
-		Lance lance = new Lance("Rafael", 0.0);
+		Lance lance = new Lance("Rafael", -1.99);
 		Leilao kindle = new Leilao("Kindle Paperwhite");
 		
 		try {
 			kindle.darLance(lance);
 			fail("Cadê a exceção?");
 		} catch (RuntimeException e) {
-			assertEquals("Lance deve ter valor maior que zero", e.getMessage());
+			assertEquals("Lance com valor negativo", e.getMessage());
 		}
+	}
+	
+	@Test
+	public void naoDeveDarLanceQuandoValorForNegativo_junitRule() {
+		
+		thrown.expect(RuntimeException.class);
+		thrown.expectMessage("Lance com valor negativo");
+		
+		Lance lance = new Lance("Rafael", -1.99);
+		
+		Leilao kindle = new Leilao("Kindle Paperwhite");
+		kindle.darLance(lance);
 	}
 	
 	@Test
